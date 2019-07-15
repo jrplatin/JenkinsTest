@@ -5,6 +5,7 @@ pipeline {
 
         stage('Build') {
             steps {
+                cd
                 ./ssh.sh
             }
         }
