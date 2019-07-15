@@ -1,22 +1,25 @@
 pipeline {
     agent any
-    environment {
-        EMAIL_ADDRESS = 'jacob.platin@aidoc.com'
-    }
     stages {
-        stage('No-op') {
+        /* "Build" and "Test" stages omitted */
+
+        stage('Deploy - Staging') {
             steps {
-                sh 'ls'
+                sh './deploy staging'
+                sh './run-smoke-tests'
             }
         }
-    }
-    post {
-        always {
-            echo 'One way or another, I have finished'
-            mail to: "${env.EMAIL_ADDRESS}",
-             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-             body: "Something is wrong with ${env.BUILD_URL}"
+
+        stage('Sanity check') {
+            steps {
+                input "Does the staging environment look ok?"
+            }
         }
-     
+
+        stage('Deploy - Production') {
+            steps {
+                sh './deploy production'
+            }
+        }
     }
 }
