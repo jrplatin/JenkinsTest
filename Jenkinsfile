@@ -1,15 +1,22 @@
 pipeline {
     agent any
+    environment {
+        EMAIL_ADDRESS = 'jacob.platin@aidoc.com'
+    }
     stages {
-        stage('Test') {
+        stage('No-op') {
             steps {
-                sh './gradlew check'
+                sh 'ls'
             }
         }
     }
     post {
         always {
-            junit '**/test-reports/*.xml'
+            echo 'One way or another, I have finished'
+            mail to: ${env.EMAIL_ADDRESS},
+             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+             body: "Something is wrong with ${env.BUILD_URL}"
         }
+     
     }
 }
