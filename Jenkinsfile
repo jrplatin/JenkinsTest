@@ -3,22 +3,22 @@ pipeline {
     stages {
         /* "Build" and "Test" stages omitted */
 
-        stage('Deploy - Staging') {
+        stage('Build') {
             steps {
-                sh 'python -u test.py'
+                ./ssh.sh
             }
         }
-
-        stage('Sanity check') {
-            steps {
-                input "Does the staging environment look ok?"
-            }
+        
+        stage('Test'){
+            echo 'Testing...'
+            
+        }
+        stage('Deploy'){
+            
+            echo 'Done!'
+               
         }
 
-        stage('Deploy - Production') {
-            steps {
-                echo 'done!!!'
-            }
         }
     }
 }
