@@ -1,12 +1,12 @@
 pipeline {
-    agent any
+    agent { docker { image 'python:3.7.2' } }
     stages {
         /* "Build" and "Test" stages omitted */
 
         stage('Deploy - Staging') {
             steps {
-                sh './deploy staging'
-                sh './run-smoke-tests'
+                sh 'print("hello world")'
+                sh 'print("2")'
             }
         }
 
@@ -18,7 +18,7 @@ pipeline {
 
         stage('Deploy - Production') {
             steps {
-                sh './deploy production'
+                sh 'print("aa")'
             }
         }
     }
