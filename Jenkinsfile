@@ -5,8 +5,7 @@ pipeline {
 
         stage('Deploy - Staging') {
             steps {
-                sh 'print("hello world")'
-                sh 'print("2")'
+                sh 'python -u test.py'
             }
         }
 
@@ -18,7 +17,6 @@ pipeline {
 
         stage('Deploy - Production') {
             steps {
-                sh 'print("aa")'
             }
         }
     }
